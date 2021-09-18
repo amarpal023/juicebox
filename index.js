@@ -1,6 +1,13 @@
+require('dotenv').config();
+
+// console.log(process.env.JWT_SECRET);
+
 const PORT = 3000;
 const express = require('express');
 const server = express();
+
+const { client } = require('./db');
+client.connect();
 
 const bodyParser = require('body-parser');
 server.use(bodyParser.json());
@@ -18,9 +25,6 @@ server.use((req, res, next) => {
 
 const apiRouter = require('./api');
 server.use('/api', apiRouter);
-
-const { client } = require('./db');
-client.connect();
 
 server.listen(PORT, () => {
   console.log('The server is up on port', PORT)
